@@ -321,16 +321,3 @@ let multiItemSlider = (function () {
 		_cycle(_config.isCycling, _config.direction, _config.interval);
 	}
 }());
-
-let miniSlider1 = multiItemSlider('.miniSlider1', {
-	dots: true,
-	dotsExist: true,
-});
-
-let miniSlider2 = multiItemSlider('.miniSlider2', {
-	slidesCount: 3
-});
-
-let miniSlider3 = multiItemSlider('.miniSlider3', {
-	slidesCount: 3
-});

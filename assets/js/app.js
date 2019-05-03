@@ -1,9 +1,8 @@
 $(function () {
 
 	let header = $(".header"),
-			introH = $(".intro").innerHeight(),
-			scrolloffset = $(window).scrollTop();
-
+		introH = $(".intro").innerHeight(),
+		scrolloffset = $(window).scrollTop();
 
 
 	/* Fixed header */
@@ -29,8 +28,8 @@ $(function () {
 		event.preventDefault();
 
 		let $this = $(this),
-				blockId = $this.data("scroll");  // get id of select element
-				blockOffset = $(blockId).offset().top;
+			blockId = $this.data("scroll");  // get id of select element
+		blockOffset = $(blockId).offset().top;
 
 		console.log($this);
 
@@ -54,22 +53,40 @@ $(function () {
 
 
 	/* Collapse */
-	$("[data-collapse]").on("click", function (event) {
-		event.preventDefault();
+	let accordionItem = document.querySelectorAll('.accordion__item');
 
-		let $this = $(this),
-				blockId = $this.data("collapse"); // get id of select element
+	accordionItem.forEach((item) => {
+		let active = false;
+		if (item.classList.contains('active')) active = true;
 
-		$this.toggleClass("active");
+		item.addEventListener('click', (evt) => {
+			evt.preventDefault();
+			if (active) {
+				active = false;
+				item.classList.remove('active');
+			} else {
+				active = true;
+				item.classList.add('active');
+			}
+		});
 	});
 
 
 	/* Slider */
-	$("[data-slider]").slick({
-		infinite: true,
-		fade: false,
-		slidesToShow: 1,
-		slidesToScroll: 1
+	multiItemSlider('.miniSlider1', {
+		dots: true,
+		dotsExist: true,
+		isCycling: true,
+		interval: 3000,
+		pause: false
+	});
+
+	multiItemSlider('.miniSlider2', {
+		slidesCount: 3
+	});
+
+	multiItemSlider('.miniSlider3', {
+		slidesCount: 3
 	});
 
 
