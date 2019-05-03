@@ -164,7 +164,7 @@
 		display: none;
 	}
 
-	.slider__item.active:before {
+	.miniSlider__dot.active:before {
 		width: 50%;
 	}
 
