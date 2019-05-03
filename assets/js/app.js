@@ -56,16 +56,23 @@ $(function () {
 	let accordionItem = document.querySelectorAll('.accordion__item');
 
 	accordionItem.forEach((item) => {
-		let active = false;
+		let content = item.querySelector('.accordion__content'),
+			text = content.querySelector('p'),
+			active = false;
+
 		if (item.classList.contains('active')) active = true;
 
 		item.addEventListener('click', (evt) => {
 			evt.preventDefault();
 			if (active) {
 				active = false;
+				content.style.paddingBottom = content.style.paddingTop = '0';
+				content.style.height = '0';
 				item.classList.remove('active');
 			} else {
 				active = true;
+				content.style.paddingBottom = content.style.paddingTop = '15px';
+				content.style.height = `${text.clientHeight + 30}px`;
 				item.classList.add('active');
 			}
 		});
