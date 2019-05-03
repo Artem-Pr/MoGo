@@ -11,8 +11,12 @@
 	<link
 		href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat:400,700|Roboto:300i,400&amp;subset=cyrillic-ext"
 		rel="stylesheet">
+	<link rel="icon" href="assets/images/favicon/favicon.ico">
+	<link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="assets/css/miniSlider.css">
+	<link rel="stylesheet" href="assets/css/responsive.css">
 </head>
 <body>
 
@@ -317,42 +321,30 @@
 	<!-- Reviews 1 -->
 	<div class="section section--gray">
 		<div class="container">
-
 			<div class="reviews">
 
-				<!--				<a class="reviews__btn reviews__btn&#45;&#45;prev" href="#">Prev</a>-->
-				<!--				<a class="reviews__btn reviews__btn&#45;&#45;next" href="#">Next</a>-->
-
-				<div data-slider>
-					<div>
-						<div class="reviews__item">
-							<img class="reviews__photo" src="assets/images/reviews/reviews__photo.png" alt="" width="150"
-									 height="150">
-							<div class="reviews__info">
-								<div class="reviews__text">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-									tempor
-									incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.”
+				<div class="miniSlider2">
+					<button class="miniSlider__control miniSlider__control_left miniSlider__control_show"></button>
+					<button class="miniSlider__control miniSlider__control_right miniSlider__control_show"></button>
+					<div class="miniSlider__stage">
+						<div class="miniSlider__wrapper">
+							<div class="miniSlider__item">
+								<div class="reviews__item">
+									<img class="reviews__photo" src="assets/images/reviews/reviews__photo.png" alt="" width="150"
+											 height="150">
+									<div class="reviews__info">
+										<div class="reviews__text">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+											tempor
+											incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.”
+										</div>
+										<div class="reviews__author">Jon Doe</div>
+									</div>
 								</div>
-								<div class="reviews__author">Jon Doe</div>
 							</div>
 						</div>
 					</div>
-
-					<div>
-						<div class="reviews__item">
-							<img class="reviews__photo" src="assets/images/reviews/reviews__photo.png" alt="" width="150"
-									 height="150">
-							<div class="reviews__info">
-								<div class="reviews__text">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-									tempor
-									incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.”
-								</div>
-								<div class="reviews__author">Jon Doe</div>
-							</div>
-						</div>
-					</div>
-
 				</div>
+
 			</div> <!-- /.reviews -->
 
 		</div>
@@ -599,43 +591,33 @@
 	</section>
 
 	<!-- Reviews 2 -->
-	<div class="section">
+	<div class="section section--slider3">
 		<div class="container">
 
 			<div class="reviews">
 
-				<!--				<a class="reviews__btn reviews__btn&#45;&#45;prev" href="#">Prev</a>-->
-				<!--				<a class="reviews__btn reviews__btn&#45;&#45;next" href="#">Next</a>-->
-
-				<div data-slider>
-					<div>
-						<div class="reviews__item">
-							<img class="reviews__photo" src="assets/images/reviews/reviews__photo2.png" alt="" width="210"
-									 height="210">
-							<div class="reviews__info">
-								<div class="reviews__text">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-									tempor
-									incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.”
+				<div class="miniSlider3">
+					<button class="miniSlider__control miniSlider__control_left miniSlider__control_show"></button>
+					<button class="miniSlider__control miniSlider__control_right miniSlider__control_show"></button>
+					<div class="miniSlider__stage">
+						<div class="miniSlider__wrapper">
+							<div class="miniSlider__item">
+								<div class="reviews__item">
+									<img class="reviews__photo" src="assets/images/reviews/reviews__photo2.png" alt="" width="210"
+											 height="210">
+									<div class="reviews__info">
+										<div class="reviews__text">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+											tempor
+											incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.”
+										</div>
+										<div class="reviews__author">Joshua Earle</div>
+									</div>
 								</div>
-								<div class="reviews__author">Joshua Earle</div>
-							</div>
-						</div>
-					</div>
-
-					<div>
-						<div class="reviews__item">
-							<img class="reviews__photo" src="assets/images/reviews/reviews__photo2.png" alt="" width="210"
-									 height="210">
-							<div class="reviews__info">
-								<div class="reviews__text">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-									tempor
-									incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.”
-								</div>
-								<div class="reviews__author">Joshua Earle</div>
 							</div>
 						</div>
 					</div>
 				</div>
+
 			</div> <!-- /.reviews -->
 
 		</div>
@@ -953,6 +935,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="assets/js/app.js"></script>
+<script src="assets/js/miniSlider.js"></script>
 
 </body>
 </html>
