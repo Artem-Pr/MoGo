@@ -101,6 +101,7 @@
 	width: 23%;
 	padding: 20px 0;
 	position: relative;
+	cursor: pointer;
 
 	border-top: 3px solid #fff;
 	opacity: .7;

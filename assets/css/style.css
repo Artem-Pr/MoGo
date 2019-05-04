@@ -817,6 +817,7 @@ hr {
 
 .works__item {
 	position: relative;
+	cursor: pointer;
 
 	background: linear-gradient(to bottom, #f38181, #fce38a);
 }
@@ -1327,4 +1328,40 @@ hr {
 
 .copyright span {
 	color: #f38181;
+}
+
+
+/* Modal */
+.modal {
+	display: none;
+	position: fixed;
+	left: 10%;
+	right: 10%;
+	top: 10%;
+	bottom: 10%;
+
+	background-color: #383838;
+	z-index: 1101;
+}
+
+.modal img {
+	position: absolute;
+	margin: auto;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+.modalLayer {
+	display: none;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+
+	background-color: #333;
+	opacity: .8;
+	z-index: 1100;
 }
