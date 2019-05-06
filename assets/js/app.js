@@ -125,6 +125,8 @@ $(function () {
 					let imgProportion = modalImg.naturalWidth / modalImg.naturalHeight,
 						modalProportion = modalBody.clientWidth / modalBody.clientHeight;
 
+					modal.style.opacity = "1";
+
 					if (imgProportion > modalProportion) {
 						modalImg.style.width = `${modalBody.clientWidth}px`;
 						modalImg.style.height = `auto`;
@@ -132,7 +134,7 @@ $(function () {
 						modalImg.style.height = `${modalBody.clientHeight}px`;
 						modalImg.style.width = `auto`;
 					}
-				}, 10);
+				}, 0);
 			})
 		});
 
@@ -140,6 +142,8 @@ $(function () {
 		modal.addEventListener('click', (evt) => {
 			if (!evt.target.classList.contains('modal__body') && !evt.target.parentElement.classList.contains('modal__body')) {
 				modal.style.display = "none";
+				modalImg.src = '#';
+				modal.style.opacity = "0";
 			}
 		});
 
@@ -147,6 +151,8 @@ $(function () {
 		document.addEventListener('keydown', (evt) => {
 			if (evt.key === "Escape") {
 				modal.style.display = "none";
+				modalImg.src = '#';
+				modal.style.opacity = "0";
 			}
 		});
 
