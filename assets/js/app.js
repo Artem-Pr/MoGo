@@ -1,7 +1,5 @@
 $(function () {
 
-	let _timerId;
-
 	let header = $(".header"),
 		introH = $(".intro").innerHeight(),
 		scrolloffset = $(window).scrollTop();
@@ -56,6 +54,7 @@ $(function () {
 
 	/* Collapse */
 	let accordion = function () {
+
 		let accordionItem = document.querySelectorAll('.accordion__item'),
 			active = {},
 			content = {},
@@ -93,58 +92,75 @@ $(function () {
 	}();
 
 
+
 	/* Gallery */
-	let gallery = document.querySelectorAll('.works__item'),
-		modal = document.querySelector('.modal'),
-		modalBody = modal.querySelector('.modal__body'),
-		modalImg = modalBody.querySelector('img');
+	let galleryFunc = function () {
 
-	gallery.forEach((item) => {
-		item.addEventListener('click', (evt) => {
-			evt.preventDefault();
-			modal.style.display = "block";
-			clearTimeout(_timerId);
+		let gallery = document.querySelectorAll('.works__item'),
+			modal = document.querySelector('.modal'),
+			modalBody = modal.querySelector('.modal__body'),
+			modalImg = modalBody.querySelector('img'),
+			heightIndent = 100,
+			_timerId;
 
+		gallery.forEach((item) => {
 			const img = item.querySelector('.works__img');
 
-			modalImg.src = img.getAttribute('data-url');
+			item.addEventListener('click', (evt) => {
+				evt.preventDefault();
+				modal.style.display = "block";
+				clearTimeout(_timerId);
 
-			_timerId = setTimeout(() => {
-				let imgProportion = modalImg.naturalWidth / modalImg.naturalHeight,
-					modalProportion = modalBody.clientWidth / modalBody.clientHeight;
+				let maxHeight = modal.clientHeight - heightIndent,
+					modalBodyHeight = modalBody.clientWidth / 1.5;
 
-				if (imgProportion > modalProportion) {
-					modalImg.style.width = `${modalBody.clientWidth}px`;
-					modalImg.style.height = `auto`;
-				} else {
-					modalImg.style.height = `${modalBody.clientHeight}px`;
-					modalImg.style.width = `auto`;
-				}
-			}, 10);
-		})
-	});
+				if (modalBodyHeight > maxHeight) {
+					modalBody.style.height = `${maxHeight}px`;
+					modalBody.style.width = `${maxHeight * 1.5}px`;
+				} else modalBody.style.height =	`${modalBodyHeight}px`;
 
-	// close the modal window if you click outside
-	modal.addEventListener('click', (evt) => {
-		if (!evt.target.classList.contains('modal__body')) {
-			modal.style.display = "none";
-		}
-	});
+				modalImg.src = img.getAttribute('data-url');
 
-	// close the modal window if you press Esc
-	document.addEventListener('keydown', (evt) => {
-		if (evt.key === "Escape") {
-			modal.style.display = "none";
-		}
-	});
+				_timerId = setTimeout(() => {
+					let imgProportion = modalImg.naturalWidth / modalImg.naturalHeight,
+						modalProportion = modalBody.clientWidth / modalBody.clientHeight;
 
-	/* Slider */
+					if (imgProportion > modalProportion) {
+						modalImg.style.width = `${modalBody.clientWidth}px`;
+						modalImg.style.height = `auto`;
+					} else {
+						modalImg.style.height = `${modalBody.clientHeight}px`;
+						modalImg.style.width = `auto`;
+					}
+				}, 10);
+			})
+		});
+
+		// close the modal window if you click outside
+		modal.addEventListener('click', (evt) => {
+			if (!evt.target.classList.contains('modal__body') && !evt.target.parentElement.classList.contains('modal__body')) {
+				modal.style.display = "none";
+			}
+		});
+
+		// close the modal window if you press Esc
+		document.addEventListener('keydown', (evt) => {
+			if (evt.key === "Escape") {
+				modal.style.display = "none";
+			}
+		});
+
+	}();
+
+
+	/* Sliders */
 	multiItemSlider('.miniSlider1', {
 		dots: true,
 		dotsExist: true,
 		isCycling: true,
 		interval: 3000,
-		pause: false
+		pause: false,
+		dotsPause: true
 	});
 
 	multiItemSlider('.miniSlider2', {
