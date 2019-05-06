@@ -55,42 +55,54 @@ $(function () {
 
 
 	/* Collapse */
-	let accordionItem = document.querySelectorAll('.accordion__item');
+	let accordion = function () {
+		let accordionItem = document.querySelectorAll('.accordion__item'),
+			active = {},
+			content = {},
+			contentText = {};
 
-	accordionItem.forEach((item) => {
-		let content = item.querySelector('.accordion__content'),
-			text = content.querySelector('p'),
-			active = false;
+		accordionItem.forEach((item, i) => {
+			content[i] = item.querySelector('.accordion__content');
+			contentText[i] = content[i].querySelector('p');
+			active[i] = item.classList.contains('active');
 
-		if (item.classList.contains('active')) active = true;
+			item.addEventListener('click', (evt) => {
+				evt.preventDefault();
 
-		item.addEventListener('click', (evt) => {
-			evt.preventDefault();
-			if (active) {
-				active = false;
-				content.style.paddingBottom = content.style.paddingTop = '0';
-				content.style.height = '0';
-				item.classList.remove('active');
-			} else {
-				active = true;
-				content.style.paddingBottom = content.style.paddingTop = '15px';
-				content.style.height = `${text.clientHeight + 30}px`;
-				item.classList.add('active');
-			}
+				for (let key in active) {
+					if (active[key]) {
+						content[key].style.paddingBottom = content[key].style.paddingTop = '0';
+						content[key].style.height = '0';
+						content[key].parentElement.classList.remove('active');
+						active[key] = false;
+					} else if (key == i) {
+						content[key].style.paddingBottom = content[key].style.paddingTop = '15px';
+						content[key].style.height = `${contentText[key].clientHeight + 30}px`;
+						content[key].parentElement.classList.add('active');
+						active[key] = true;
+					}
+				}
+			});
+
+			// deselect of item
+			item.onmousedown = item.onselectstart = function () {
+				return false;
+			};
+
 		});
-	});
+	}();
 
 
 	/* Gallery */
 	let gallery = document.querySelectorAll('.works__item'),
 		modal = document.querySelector('.modal'),
-		modalImg = modal.querySelector('img'),
-		modalLayer = document.querySelector('.modalLayer');
+		modalBody = modal.querySelector('.modal__body'),
+		modalImg = modalBody.querySelector('img');
 
 	gallery.forEach((item) => {
 		item.addEventListener('click', (evt) => {
 			evt.preventDefault();
-			modal.style.display = modalLayer.style.display = "block";
+			modal.style.display = "block";
 			clearTimeout(_timerId);
 
 			const img = item.querySelector('.works__img');
@@ -99,13 +111,13 @@ $(function () {
 
 			_timerId = setTimeout(() => {
 				let imgProportion = modalImg.naturalWidth / modalImg.naturalHeight,
-					modalProportion = modal.clientWidth / modal.clientHeight;
+					modalProportion = modalBody.clientWidth / modalBody.clientHeight;
 
 				if (imgProportion > modalProportion) {
-					modalImg.style.width = `${modal.clientWidth}px`;
+					modalImg.style.width = `${modalBody.clientWidth}px`;
 					modalImg.style.height = `auto`;
 				} else {
-					modalImg.style.height = `${modal.clientHeight}px`;
+					modalImg.style.height = `${modalBody.clientHeight}px`;
 					modalImg.style.width = `auto`;
 				}
 			}, 10);
@@ -114,11 +126,17 @@ $(function () {
 
 	// close the modal window if you click outside
 	modal.addEventListener('click', (evt) => {
-		if (!evt.target.classList.contains('modal')) {
-			modal.style.display = modalLayer.style.display = "none";
+		if (!evt.target.classList.contains('modal__body')) {
+			modal.style.display = "none";
 		}
 	});
 
+	// close the modal window if you press Esc
+	document.addEventListener('keydown', (evt) => {
+		if (evt.key === "Escape") {
+			modal.style.display = "none";
+		}
+	});
 
 	/* Slider */
 	multiItemSlider('.miniSlider1', {
