@@ -164,10 +164,7 @@ $(function () {
 				modalBody.style.width = `${maxHeight * 1.5}px`;
 			} else modalBody.style.height = `${modalBodyHeight}px`;
 
-			timerId = setTimeout(() => {
-				imgLoad();
-				modal.style.opacity = "1";
-			}, 0);
+			imgLoad();
 		}
 
 
@@ -195,16 +192,21 @@ $(function () {
 
 			modalImg.src = target.getAttribute('data-url');
 
-			let imgProportion = modalImg.naturalWidth / modalImg.naturalHeight,
-				modalProportion = modalBody.clientWidth / modalBody.clientHeight;
+			timerId = setTimeout(() => {
 
-			if (imgProportion > modalProportion) {
-				modalImg.style.width = `${modalBody.clientWidth}px`;
-				modalImg.style.height = `auto`;
-			} else {
-				modalImg.style.height = `${modalBody.clientHeight}px`;
-				modalImg.style.width = `auto`;
-			}
+				let imgProportion = modalImg.naturalWidth / modalImg.naturalHeight,
+					modalProportion = modalBody.clientWidth / modalBody.clientHeight;
+
+				if (imgProportion > modalProportion) {
+					modalImg.style.width = `${modalBody.clientWidth}px`;
+					modalImg.style.height = `auto`;
+				} else {
+					modalImg.style.height = `${modalBody.clientHeight}px`;
+					modalImg.style.width = `auto`;
+				}
+
+				modal.style.opacity = "1";
+			}, 0);
 		}
 
 
