@@ -1369,3 +1369,33 @@ hr {
 	top: 0;
 	bottom: 0;
 }
+
+.modal__btn {
+	position: absolute;
+	height: 50px;
+	width: 50px;
+	top: 50%;
+	background-color: transparent;
+
+	border-left: none;
+	border-bottom: none;
+	border-top: 5px solid #fff;
+	border-right: 5px solid #fff;
+	transform: translateY(-50%);
+	z-index: 1102;
+	cursor: pointer;
+}
+
+.modal__btn:focus {
+	outline: none;
+}
+
+.modal__btn--left {
+	left: 100px;
+	transform: rotate(-150grad);
+}
+
+.modal__btn--right {
+	right: 100px;
+	transform: rotate(50grad);
+}

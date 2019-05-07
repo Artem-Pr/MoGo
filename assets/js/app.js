@@ -101,10 +101,13 @@ $(function () {
 			modalBody = modal.querySelector('.modal__body'),
 			modalImg = modalBody.querySelector('img'),
 			heightIndent = 100,
+			galleryLinks = {},
 			_timerId;
 
-		gallery.forEach((item) => {
-			const img = item.querySelector('.works__img');
+		gallery.forEach((item, i) => {
+			const img = item.querySelector('.works__img'),
+				imgLink = img.getAttribute('data-url');
+			galleryLinks[imgLink] = i;
 
 			item.addEventListener('click', (evt) => {
 				evt.preventDefault();
@@ -119,7 +122,7 @@ $(function () {
 					modalBody.style.width = `${maxHeight * 1.5}px`;
 				} else modalBody.style.height =	`${modalBodyHeight}px`;
 
-				modalImg.src = img.getAttribute('data-url');
+				modalImg.src = imgLink;
 
 				_timerId = setTimeout(() => {
 					let imgProportion = modalImg.naturalWidth / modalImg.naturalHeight,
@@ -140,7 +143,7 @@ $(function () {
 
 		// close the modal window if you click outside
 		modal.addEventListener('click', (evt) => {
-			if (!evt.target.classList.contains('modal__body') && !evt.target.parentElement.classList.contains('modal__body')) {
+			if (!evt.target.classList.contains('modal__body') && !evt.target.parentElement.classList.contains('modal__body') && !evt.target.classList.contains('modal__btn')) {
 				modal.style.display = "none";
 				modalImg.src = '#';
 				modal.style.opacity = "0";
