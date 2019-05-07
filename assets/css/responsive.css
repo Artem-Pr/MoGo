@@ -205,9 +205,13 @@
 
 
 	/* Works */
-	.works__col {
-		flex: none;
-		width: 50%;
+	.works {
+		grid-template-columns: 50% 50%;
+	}
+
+	.works__item--2rows {
+		grid-row: 2/4;
+		grid-column-start: 1;
 	}
 
 

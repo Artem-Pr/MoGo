@@ -92,62 +92,41 @@ $(function () {
 	}();
 
 
-
 	/* Gallery */
 	let galleryFunc = function () {
 
-		let gallery = document.querySelectorAll('.works__item'),
+		let worksGallery = document.querySelector('.works'),
 			modal = document.querySelector('.modal'),
+			btn = modal.querySelectorAll('.modal__btn'),
 			modalBody = modal.querySelector('.modal__body'),
 			modalImg = modalBody.querySelector('img'),
 			heightIndent = 100,
-			galleryLinks = {},
-			_timerId;
+			target,
+			timerId;
 
-		gallery.forEach((item, i) => {
-			const img = item.querySelector('.works__img'),
-				imgLink = img.getAttribute('data-url');
-			galleryLinks[imgLink] = i;
 
-			item.addEventListener('click', (evt) => {
-				evt.preventDefault();
-				modal.style.display = "block";
-				clearTimeout(_timerId);
-
-				let maxHeight = modal.clientHeight - heightIndent,
-					modalBodyHeight = modalBody.clientWidth / 1.5;
-
-				if (modalBodyHeight > maxHeight) {
-					modalBody.style.height = `${maxHeight}px`;
-					modalBody.style.width = `${maxHeight * 1.5}px`;
-				} else modalBody.style.height =	`${modalBodyHeight}px`;
-
-				modalImg.src = imgLink;
-
-				_timerId = setTimeout(() => {
-					let imgProportion = modalImg.naturalWidth / modalImg.naturalHeight,
-						modalProportion = modalBody.clientWidth / modalBody.clientHeight;
-
-					modal.style.opacity = "1";
-
-					if (imgProportion > modalProportion) {
-						modalImg.style.width = `${modalBody.clientWidth}px`;
-						modalImg.style.height = `auto`;
-					} else {
-						modalImg.style.height = `${modalBody.clientHeight}px`;
-						modalImg.style.width = `auto`;
-					}
-				}, 0);
-			})
+		// show modal window
+		worksGallery.addEventListener('click', evt => {
+			evt.preventDefault();
+			target = evt.target;
+			while (target !== worksGallery) {
+				if (target.classList.contains('works__img')) {
+					showPicture();
+					return;
+				}
+				if (target.classList.contains('works__item')) target = target.querySelector('.works__img');
+				else target = target.parentNode;
+			}
 		});
+
 
 		// close the modal window if you click outside
 		modal.addEventListener('click', (evt) => {
-			if (!evt.target.classList.contains('modal__body') && !evt.target.parentElement.classList.contains('modal__body') && !evt.target.classList.contains('modal__btn')) {
-				modal.style.display = "none";
-				modalImg.src = '#';
-				modal.style.opacity = "0";
-			}
+			let target = evt.target;
+			if (target !== modal) return;
+			modal.style.display = "none";
+			modalImg.src = '#';
+			modal.style.opacity = "0";
 		});
 
 		// close the modal window if you press Esc
@@ -158,6 +137,76 @@ $(function () {
 				modal.style.opacity = "0";
 			}
 		});
+
+
+		btn.forEach(item => {
+			let direction;
+			if (item.classList.contains('modal__btn--left')) direction = 'left';
+			else direction = 'right';
+
+			item.addEventListener('click', evt => {
+				evt.preventDefault();
+				imgLoad(direction);
+			});
+		});
+
+
+		function showPicture() {
+
+			modal.style.display = "block";
+			clearTimeout(timerId);
+
+			let maxHeight = modal.clientHeight - heightIndent,
+				modalBodyHeight = modalBody.clientWidth / 1.5;
+
+			if (modalBodyHeight > maxHeight) {
+				modalBody.style.height = `${maxHeight}px`;
+				modalBody.style.width = `${maxHeight * 1.5}px`;
+			} else modalBody.style.height = `${modalBodyHeight}px`;
+
+			timerId = setTimeout(() => {
+				imgLoad();
+				modal.style.opacity = "1";
+			}, 0);
+		}
+
+
+		function imgLoad(direction) {
+			if (direction) {
+				let parent = target.parentElement;
+				switch (direction) {
+					case 'left':
+						if (parent.previousElementSibling) {
+							target = parent.previousElementSibling.querySelector('.works__img');
+						} else {
+							parent = parent.parentElement;
+							target = parent.lastElementChild.querySelector('.works__img');
+						}
+						break;
+					case 'right':
+						if (parent.nextElementSibling) {
+							target = parent.nextElementSibling.querySelector('.works__img');
+						} else {
+							parent = parent.parentElement;
+							target = parent.firstElementChild.querySelector('.works__img');
+						}
+				}
+			}
+
+			modalImg.src = target.getAttribute('data-url');
+
+			let imgProportion = modalImg.naturalWidth / modalImg.naturalHeight,
+				modalProportion = modalBody.clientWidth / modalBody.clientHeight;
+
+			if (imgProportion > modalProportion) {
+				modalImg.style.width = `${modalBody.clientWidth}px`;
+				modalImg.style.height = `auto`;
+			} else {
+				modalImg.style.height = `${modalBody.clientHeight}px`;
+				modalImg.style.width = `auto`;
+			}
+		}
+
 
 	}();
 
