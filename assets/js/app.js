@@ -1,4 +1,4 @@
-$(function () {
+window.onload = function() {
 
 	// Class WindowElem to create scroll listener
 	class WindowElem {
@@ -257,4 +257,4 @@ $(function () {
 		slidesCount: 3
 	});
 
-});
+};
