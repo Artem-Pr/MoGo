@@ -1,55 +1,79 @@
 $(function () {
 
-	let header = $(".header"),
-		introH = $(".intro").innerHeight(),
-		scrolloffset = $(window).scrollTop();
+	// Class WindowElem to create scroll listener
+	class WindowElem {
+		constructor() {
+			window.addEventListener('scroll', this.windowOffset.bind(this));
+		}
 
-
-	/* Fixed header */
-	checkScroll(scrolloffset);
-
-	$(window).on("scroll", function () {
-		scrolloffset = $(this).scrollTop();
-
-		checkScroll(scrolloffset);
-	});
-
-	function checkScroll(scrolloffset) {
-		if (scrolloffset >= introH) {
-			header.addClass("fixed");
-		} else {
-			header.removeClass("fixed");
+		windowOffset() {
+			return window.pageYOffset;
 		}
 	}
 
 
-	/* Smooth scroll */
-	$("[data-scroll]").on("click", function (event) {
-		event.preventDefault();
+	// Class Intro to get Intro params
+	class Intro {
+		static getObject() {
+			return document.querySelector('.intro');
+		}
 
-		let $this = $(this),
-			blockId = $this.data("scroll");  // get id of select element
-		blockOffset = $(blockId).offset().top;
-
-		console.log($this);
-
-		$(".nav a").removeClass("active");
-		$this.addClass("active");
-
-		$("html, body").animate({
-			scrollTop: blockOffset
-		}, 500);
-	});
+		static getHeight() {
+			return Intro.getObject().clientHeight;
+		}
+	}
 
 
-	/* Menu nav toggle */
-	$(".nav-toggle").on("click", function (event) {
-		event.preventDefault();
+	// Class Header adds a toggle to switch the class "fixed"
+	class Header extends WindowElem {
+		getObject() {
+			return document.querySelector('.header');
+		}
 
-		$(this).toggleClass("active");
-		$(".nav").toggleClass("active");
+		addClassFixed() {
+			this.getObject().classList.add('fixed');
+		}
 
-	});
+		removeClassFixed() {
+			this.getObject().classList.remove('fixed');
+		}
+
+		windowOffset() {
+			this.fixHeader(super.windowOffset());
+		}
+
+		fixHeader(windowOffset) {
+			if (windowOffset >= Intro.getHeight()) this.addClassFixed();
+			else this.removeClassFixed();
+		}
+	}
+
+
+	// Class HeaderInner to create nav menu with smooth scroll
+	class HeaderInner {
+		constructor() {
+			this.elem = document.querySelector('.header__inner');
+			this.elem.addEventListener('click', this.onClick.bind(this));
+		}
+
+		scrollToTarget(evt) {
+			let action = evt.target.dataset.scroll;
+			if (action) {
+				window.scrollTo({
+					top: document.querySelector(action).offsetTop,
+					behavior: "smooth"
+				})
+			}
+		}
+
+		onClick(evt) {
+			evt.preventDefault();
+			this.scrollToTarget(evt);
+		};
+	}
+
+	new HeaderInner(); // create a nav menu listener for smooth scrolling
+	new Header(); // create a scroll listener for switch class "fixed"
 
 
 	/* Collapse */
@@ -190,6 +214,7 @@ $(function () {
 				}
 			}
 
+			modalImg.style.opacity = '0';
 			modalImg.src = target.getAttribute('data-url');
 
 			timerId = setTimeout(() => {
@@ -206,6 +231,7 @@ $(function () {
 				}
 
 				modal.style.opacity = "1";
+				modalImg.style.opacity = '1';
 			}, 0);
 		}
 
@@ -230,6 +256,5 @@ $(function () {
 	multiItemSlider('.miniSlider3', {
 		slidesCount: 3
 	});
-
 
 });

@@ -126,6 +126,10 @@ hr {
 	transform: translate3d(0, 0, 0);
 }
 
+.header.fixed .header__logo {
+	cursor: pointer;
+}
+
 .header.active {
 	background-color: #f38181;
 }
