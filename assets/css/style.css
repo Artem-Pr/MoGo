@@ -155,6 +155,7 @@ hr {
 .nav {
 	font-size: 14px;
 	text-transform: uppercase;
+	transition: height .5s;
 }
 
 .nav__link {

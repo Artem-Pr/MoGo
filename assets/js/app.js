@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
 
 	// Class WindowElem to create scroll listener
 	class WindowElem {
@@ -8,18 +8,6 @@ window.onload = function() {
 
 		windowOffset() {
 			return window.pageYOffset;
-		}
-	}
-
-
-	// Class Intro to get Intro params
-	class Intro {
-		static getObject() {
-			return document.querySelector('.intro');
-		}
-
-		static getHeight() {
-			return Intro.getObject().clientHeight;
 		}
 	}
 
@@ -56,23 +44,70 @@ window.onload = function() {
 			this.elem.addEventListener('click', this.onClick.bind(this));
 		}
 
-		scrollToTarget(evt) {
-			let action = evt.target.dataset.scroll;
-			if (action) {
-				window.scrollTo({
-					top: document.querySelector(action).offsetTop,
-					behavior: "smooth"
-				})
-			}
+		scrollToTarget(idOfElem) {
+			window.scrollTo({
+				top: document.querySelector(idOfElem).offsetTop,
+				behavior: "smooth"
+			})
+		}
+
+		getNavObject() {
+			return this.elem.querySelector('.nav');
 		}
 
 		onClick(evt) {
 			evt.preventDefault();
-			this.scrollToTarget(evt);
+			let idOfElem = evt.target.dataset.scroll;
+			if (idOfElem) this.scrollToTarget(idOfElem);
 		};
 	}
 
+
+	// Class NavToggle shows the nav menu then it's hidden
+	class NavToggle extends HeaderInner {
+
+		isNavToggle(target) {
+			return target.classList.contains('nav-toggle');
+		}
+
+		navShow(nav) {
+			nav.classList.add('show');
+			nav.style.height = nav.scrollHeight + 'px';
+		}
+
+		navHide(nav) {
+			nav.classList.remove('show');
+			nav.style.height = '0';
+		}
+
+		onClick(evt) {
+			evt.preventDefault();
+			let target = evt.target;
+			if (!this.isNavToggle(target)) {
+				target = target.parentElement;
+				if (!this.isNavToggle(target)) return;
+			}
+			let nav = this.getNavObject();
+			if (nav.classList.contains('show')) this.navHide(nav);
+			else this.navShow(nav);
+
+		}
+	}
+
+
+	// Class Intro to get Intro params
+	class Intro {
+		static getObject() {
+			return document.querySelector('.intro');
+		}
+
+		static getHeight() {
+			return Intro.getObject().clientHeight;
+		}
+	}
+
 	new HeaderInner(); // create a nav menu listener for smooth scrolling
+	new NavToggle();
 	new Header(); // create a scroll listener for switch class "fixed"
 
 
